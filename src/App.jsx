@@ -27,58 +27,62 @@ export default function App() {
     setTimeout(() => setSaved(false), 2500);
   }
 
-  return (
-  <div>
-    {/* Header */}
-    <div className="app-header">
-      <h1 className="app-title">🌍 Eurotrip Planner</h1>
-      <button
-        className={`btn-save${saved ? ' btn-save--ok' : ''}`}
-        onClick={handleSave}
-      >
-        {saved ? '✅ Salvo!' : '💾 Salvar'}
-      </button>
-    </div>
-
-    {/* Map */}
-    <div className="map-wrapper">
-      <MapView />
-    </div>
-
-    {/* Tabs */}
-    <div className="tabs-bar">
-      {TABS.map((tab) => (
+    return (
+    <div>
+      {/* Header */}
+      <div className="app-header">
+        <h1 className="app-title">🌍 Eurotrip Planner</h1>
         <button
-          key={tab.id}
-          className={`tab-btn${activeTab === tab.id ? ' tab-btn--active' : ''}`}
-          onClick={() => setActiveTab(tab.id)}
+          className={`btn-save${saved ? ' btn-save--ok' : ''}`}
+          onClick={handleSave}
         >
-          {tab.label}
+          {saved ? '✅ Salvo!' : '💾 Salvar'}
         </button>
-      ))}
+      </div>
+  
+      {/* Map */}
+      <div className="map-wrapper">
+        <MapView />
+      </div>
+  
+      {/* Tabs */}
+      <div className="tabs-bar">
+        {TABS.map((tab) => (
+          <button
+            key={tab.id}
+            className={`tab-btn${activeTab === tab.id ? ' tab-btn--active' : ''}`}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+  
+      {/* Tab Content */}
+      <div className="accommodations-section">
+        {activeTab === 'accommodations' && (
+          <>
+            <AccommodationForm onAdd={addAccommodation} />
+            <AccommodationList
+              accommodations={accommodations}
+              onRemove={removeAccommodation}
+            />
+          </>
+        )}
+  
+        {activeTab === 'flights' && (
+          <>
+            <FlightForm onAdd={addFlight} />
+            <FlightList
+              flights={flights}
+              onRemove={removeFlight}
+            />
+          </>
+        )}
+      </div>
     </div>
+  )
+}
 
-    {/* Tab Content */}
-    <div className="accommodations-section">
-      {activeTab === 'accommodations' && (
-        <>
-          <AccommodationForm onAdd={addAccommodation} />
-          <AccommodationList
-            accommodations={accommodations}
-            onRemove={removeAccommodation}
-          />
-        </>
-      )}
 
-      {activeTab === 'flights' && (
-        <>
-          <FlightForm onAdd={addFlight} />
-          <FlightList
-            flights={flights}
-            onRemove={removeFlight}
-          />
-        </>
-      )}
-    </div>
-  </div>
-);
+  
